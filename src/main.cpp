@@ -8,7 +8,7 @@ using namespace std;
 
 list<string> quotesList;
 set<string> quotes;
-string version = "1.0.0 RELEASE";
+string version = "1.1.0 RELEASE";
 
 int noQuotesCheck() {
   if (quotes.empty() == 1) {
@@ -101,6 +101,7 @@ int main(int argc, char *argv[]) {
       int specifiedQuote = (atoi(argv[3]) - 1);
 
       cout << *next(quotesList.begin(), specifiedQuote) << "\n";
+      return 0;
     }
   }
   return 1;
