@@ -2,9 +2,11 @@
 #include <fstream>
 #include <set>
 #include <string>
+#include <list>
 
 using namespace std;
 
+list<string> quotesList;
 set<string> quotes;
 string version = "1.0.0 RELEASE";
 
@@ -33,6 +35,18 @@ void loadQuotes(string filepath) {
 
   while(getline(QUOTEFILE, singleQuote)) {
     quotes.insert(singleQuote);
+  }
+
+  QUOTEFILE.close();
+}
+
+void loadQuotesList(string filepath) {
+  string singleQuote;
+
+  ifstream QUOTEFILE(filepath);
+
+  while(getline(QUOTEFILE, singleQuote)) {
+    quotesList.push_back(singleQuote);
   }
 
   QUOTEFILE.close();
@@ -69,7 +83,7 @@ int main(int argc, char *argv[]) {
       return 1;
     }
 
-    if (argc == 2 && argv[1] == "-h") {
+    if (argc == 2 && string(argv[1]) == "-h") {
       helpPromt();
       return 0;
     }
@@ -80,6 +94,13 @@ int main(int argc, char *argv[]) {
     if (argc == 3 && string(argv[2]) == "-l") {
       listQuotes();
       return 0;
+    }
+    if (argc == 4 && string(argv[2]) == "-s") {
+      loadQuotesList(argv[1]);
+
+      int specifiedQuote = (atoi(argv[3]) - 1);
+
+      cout << *next(quotesList.begin(), specifiedQuote) << "\n";
     }
   }
   return 1;
