@@ -8,7 +8,7 @@ using namespace std;
 
 list<string> quotesList;
 set<string> quotes;
-string version = "1.0.2 RELEASE";
+string version = "1.0.3 DEVLOPMENT";
 
 int noQuotesCheck() {
   if (quotes.empty() == 1) {
@@ -77,6 +77,9 @@ int main(int argc, char *argv[]) {
   //checks for more than zero arguments
   if (argc >= 2) {
     if (argc == 2 && string(argv[1]) == "-h") {
+      helpPromt();
+      return 0;
+    } else if (argc == 3 && string(argv[2]) == "-h") {
       helpPromt();
       return 0;
     }
