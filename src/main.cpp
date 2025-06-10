@@ -8,7 +8,7 @@ using namespace std;
 
 list<string> quotesList;
 set<string> quotes;
-string version = "1.1.0 RELEASE";
+string version = "1.0.2 RELEASE";
 
 int noQuotesCheck() {
   if (quotes.empty() == 1) {
@@ -24,6 +24,7 @@ void helpPromt() {
   cout << "ranqo version: " << version << "\n";
   cout << "usage... ranqo <filepath> [argument]\n\n";
   cout << "arguments:\n";
+  cout << "-s    ranqo <filepath> -p <number> : Shows a specific quote\n";
   cout << "-l    ranqo <filepath> -l : Lists all the quotes\n";
   cout << "-h    ranqo -h : Shows the help promt\n";
 }
@@ -75,6 +76,11 @@ int main(int argc, char *argv[]) {
   }
   //checks for more than zero arguments
   if (argc >= 2) {
+    if (argc == 2 && string(argv[1]) == "-h") {
+      helpPromt();
+      return 0;
+    }
+
     loadQuotes(argv[1]);
     int noQuotes = noQuotesCheck();
 
@@ -83,11 +89,7 @@ int main(int argc, char *argv[]) {
       return 1;
     }
 
-    if (argc == 2 && string(argv[1]) == "-h") {
-      helpPromt();
-      return 0;
-    }
-    if (argc == 2 && argv[1] != "-h") {
+    if (argc == 2 && string(argv[1]) != "-h") {
       randomQuote();
       return 0;
     }
