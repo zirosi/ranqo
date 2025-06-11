@@ -54,6 +54,42 @@ void loadQuotesList(string filepath) {
   QUOTEFILE.close();
 }
 
+void removeQuote(string deletingQuote, string filepath) {
+  ifstream QUOTEFILE(filepath);
+  ofstream temp;
+  temp.open("temp.rqo");
+
+  string currentLine;
+
+  while(getline(QUOTEFILE, currentLine)) {
+    if (currentLine != deletingQuote) {
+      temp << currentLine << endl;
+    }
+  }
+
+  QUOTEFILE.close();
+  temp.close();
+  rename("temp.rqo", filepath.c_str());
+}
+
+void addQuote(string addingQuote, string filepath) {
+  ifstream QUOTEFILE(filepath);
+  ofstream temp;
+  temp.open("temp.rqo");
+  
+  string currentLine;
+  
+  while(getline(QUOTEFILE, currentLine)) {
+    temp << currentLine << endl;
+  }
+
+  temp << addingQuote << endl;
+
+  QUOTEFILE.close();
+  temp.close();
+  rename("temp.rqo", filepath.c_str());
+}
+
 void randomQuote() {
   srand(time(0));
   int selectedQuote = rand() % quotes.size();
@@ -116,15 +152,28 @@ int main(int argc, char *argv[]) {
       return 0;
     }
 
+    // quote management
     if (argc == 4 && string(argv[2]) == "-a") {
-      ofstream QUOTEFILE(argv[1]);
-      
-      string userInput = argv[3];
+      addQuote(argv[3], argv[1]);
+      return 0;
+    }
 
-      QUOTEFILE << userInput;
+    if (argc >= 4 && string(argv[2]) == "-al") {
+      addQuote(argv[3], argv[1]);
+      loadQuotes(argv[1]);
+      listQuotes();
+      return 0;
+    }
 
-      QUOTEFILE.close();
+    if (argc >= 4 && string(argv[2]) == "-r") {
+      removeQuote(argv[3], argv[1]);
+      return 0;
+    }
 
+    if (argc >= 4 && string(argv[2]) == "-rl") {
+      removeQuote(argv[3], argv[1]);
+      loadQuotes(argv[1]);
+      listQuotes();
       return 0;
     }
 
