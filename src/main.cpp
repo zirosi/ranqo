@@ -8,7 +8,7 @@ using namespace std;
 
 list<string> quotesList;
 set<string> quotes;
-string version = "1.0.3 DEVLOPMENT";
+string version = "1.1 RELEASE";
 
 int noQuotesCheck() {
   if (quotes.empty() == 1) {
@@ -116,12 +116,15 @@ void addQuote(string addingQuote, string filepath) {
   
   string currentLine;
   int repeatQuote = 1;
+  int doRepeatQuote = 1;
 
   while(getline(QUOTEFILE, currentLine)) {
-    if (currentLine == addingQuote) {
-      repeatQuote = warnRepeatQuote();
+    if (doRepeatQuote == 1 && currentLine == addingQuote) {
+      cout << "cannot add the same line twice\n";
+      doRepeatQuote = 0;
+    } else {
+      temp << currentLine << endl;
     }
-    temp << currentLine << endl;
   }
 
   if (repeatQuote == 1) {
