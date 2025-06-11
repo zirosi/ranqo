@@ -24,9 +24,10 @@ void helpPromt() {
   cout << "ranqo version: " << version << "\n";
   cout << "usage... ranqo <filepath> [argument]\n\n";
   cout << "arguments:\n";
-  cout << "-s    ranqo <filepath> -p <number> : Shows a specific quote\n";
-  cout << "-l    ranqo <filepath> -l : Lists all the quotes\n";
   cout << "-h    ranqo -h : Shows the help promt\n";
+  cout << "-l    ranqo <filepath> -l : Lists all the quotes\n";
+  cout << "-s    ranqo <filepath> -p <number> : Shows a specific quote\n";
+  cout << "-a    ranqo <filepath> -a <quote> : Adds a quote to the quotefile\n";
 }
 
 void loadQuotes(string filepath) {
@@ -67,6 +68,7 @@ void listQuotes() {
 }
 
 int main(int argc, char *argv[]) {
+
   //checks if there is no arguments
   if (argc == 1) {
     cout << "usage... ranqo <filepath> [arguments]\n";
@@ -74,8 +76,11 @@ int main(int argc, char *argv[]) {
     cout << "please input a .rqo or .txt file\n";
     return 0;
   }
+
   //checks for more than zero arguments
   if (argc >= 2) {
+
+    // checks for help
     if (argc == 2 && string(argv[1]) == "-h") {
       helpPromt();
       return 0;
@@ -87,7 +92,7 @@ int main(int argc, char *argv[]) {
     loadQuotes(argv[1]);
     int noQuotes = noQuotesCheck();
 
-    if (noQuotes == 1) {
+    if (noQuotes == 1 && string(argv[2]) != "-a") {
       cout << "The quotefile cannot be empty\n";
       return 1;
     }
@@ -96,10 +101,12 @@ int main(int argc, char *argv[]) {
       randomQuote();
       return 0;
     }
+
     if (argc == 3 && string(argv[2]) == "-l") {
       listQuotes();
       return 0;
     }
+
     if (argc == 4 && string(argv[2]) == "-s") {
       loadQuotesList(argv[1]);
 
@@ -108,6 +115,20 @@ int main(int argc, char *argv[]) {
       cout << *next(quotesList.begin(), specifiedQuote) << "\n";
       return 0;
     }
+
+    if (argc == 4 && string(argv[2]) == "-a") {
+      ofstream QUOTEFILE(argv[1]);
+      
+      string userInput = argv[3];
+
+      QUOTEFILE << userInput;
+
+      QUOTEFILE.close();
+
+      return 0;
+    }
+
+    cout << "incorrect argument\n";
+    return 1;
   }
-  return 1;
 }
