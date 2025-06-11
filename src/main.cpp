@@ -23,11 +23,48 @@ int noQuotesCheck() {
 void helpPromt() {
   cout << "ranqo version: " << version << "\n";
   cout << "usage... ranqo <filepath> [argument]\n\n";
-  cout << "arguments:\n";
+  cout << "arguments:\n\n";
+  cout << "-- Basic Commands --\n";
   cout << "-h    ranqo -h : Shows the help promt\n";
   cout << "-l    ranqo <filepath> -l : Lists all the quotes\n";
-  cout << "-s    ranqo <filepath> -p <number> : Shows a specific quote\n";
-  cout << "-a    ranqo <filepath> -a <quote> : Adds a quote to the quotefile\n";
+  cout << "-s    ranqo <filepath> -s <number> : Shows a specific quote\n\n";
+  cout << "-- Quote Manipulation --\n";
+  cout << "-a    ranqo <filepath> -a \"quote\" : Adds a quote to the quotefile\n";
+  cout << "-r    ranqo <filepath> -r \"quote\" : Removes a quote from the quotefile\n";
+  cout << "-al   ranqo <filepath> -al \"quote\" : Adds a quote to the quotefile and lists it\n";
+  cout << "-rl   ranqo <filepath> -rl \"quote\" : Removes a quote from the quotefile and lists it\n";
+}
+
+string argv2Quote(char *argv[], int beginingArgv, int argvSize) {
+  string quote;
+  for (int i = beginingArgv; i < argvSize; i++) {
+    quote += argv[i];
+    if (i != (argvSize - 1)) {
+      quote += " ";
+    }
+  }
+  return quote;
+}
+
+bool warnRepeatQuote() {
+  string response;
+  
+  cout << "The quote you want to add is already here, do you want to add it again?\n";
+  cout << "If there are more than one already, you will recive this message again\n";
+  while (true) {
+    cout << "Y/N: ";
+    cin >> response;
+
+    if (response == "Y") {
+      return 1;
+    }
+    if (response == "N") {
+      return 0;
+    } else {
+      cout << "that is not an option\n";
+    }
+  }
+  return 1;
 }
 
 void loadQuotes(string filepath) {
@@ -78,12 +115,18 @@ void addQuote(string addingQuote, string filepath) {
   temp.open("temp.rqo");
   
   string currentLine;
-  
+  int repeatQuote = 1;
+
   while(getline(QUOTEFILE, currentLine)) {
+    if (currentLine == addingQuote) {
+      repeatQuote = warnRepeatQuote();
+    }
     temp << currentLine << endl;
   }
 
-  temp << addingQuote << endl;
+  if (repeatQuote == 1) {
+    temp << addingQuote << endl;
+  }
 
   QUOTEFILE.close();
   temp.close();
@@ -153,25 +196,28 @@ int main(int argc, char *argv[]) {
     }
 
     // quote management
-    if (argc == 4 && string(argv[2]) == "-a") {
-      addQuote(argv[3], argv[1]);
+    if (argc >= 4 && string(argv[2]) == "-a") {
+      string addingQuote = argv2Quote(argv, 3, argc);
+      addQuote(addingQuote, argv[1]);
       return 0;
     }
 
     if (argc >= 4 && string(argv[2]) == "-al") {
-      addQuote(argv[3], argv[1]);
-      loadQuotes(argv[1]);
+      string addingQuote = argv2Quote(argv, 3, argc);
+      addQuote(addingQuote, argv[1]);
       listQuotes();
       return 0;
     }
 
     if (argc >= 4 && string(argv[2]) == "-r") {
-      removeQuote(argv[3], argv[1]);
+      string removingQuote = argv2Quote(argv, 3, argc);
+      removeQuote(removingQuote, argv[1]);
       return 0;
     }
 
     if (argc >= 4 && string(argv[2]) == "-rl") {
-      removeQuote(argv[3], argv[1]);
+      string removingQuote = argv2Quote(argv, 3, argc);
+      removeQuote(removingQuote, argv[1]);
       loadQuotes(argv[1]);
       listQuotes();
       return 0;
