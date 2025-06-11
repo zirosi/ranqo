@@ -8,7 +8,7 @@ using namespace std;
 
 list<string> quotesList;
 set<string> quotes;
-string version = "1.1 RELEASE";
+string version = "1.2 DEVELOPMENT";
 
 int noQuotesCheck() {
   if (quotes.empty() == 1) {
@@ -24,10 +24,11 @@ void helpPromt() {
   cout << "ranqo version: " << version << "\n";
   cout << "usage... ranqo <filepath> [argument]\n\n";
   cout << "arguments:\n\n";
-  cout << "-- Basic Commands --\n";
+  cout << "-- Basic Arguments --\n";
   cout << "-h    ranqo -h : Shows the help promt\n";
   cout << "-l    ranqo <filepath> -l : Lists all the quotes\n";
-  cout << "-s    ranqo <filepath> -s <number> : Shows a specific quote\n\n";
+  cout << "-s    ranqo <filepath> -s <number> : Shows a specific quote\n";
+  cout << "-f    ranqo <filepath> -f <quote> : Finds a quote in the quotefile\n\n";
   cout << "-- Quote Manipulation --\n";
   cout << "-a    ranqo <filepath> -a \"quote\" : Adds a quote to the quotefile\n";
   cout << "-r    ranqo <filepath> -r \"quote\" : Removes a quote from the quotefile\n";
@@ -136,6 +137,24 @@ void addQuote(string addingQuote, string filepath) {
   rename("temp.rqo", filepath.c_str());
 }
 
+int findQuote(string findingQuote, string filepath) {
+  ifstream QUOTEFILE(filepath);
+
+  string currentLine;
+  int currentLineNumber = 0;
+
+  while(getline(QUOTEFILE, currentLine)) {
+    currentLineNumber += 1;
+    if (currentLine == findingQuote) {
+      cout << "Found quote \'" << findingQuote << "\' at line " << currentLineNumber << "\n";
+      return 0;
+    }
+  }
+
+  cout << "There was not quote matching: " << findingQuote << "\n";
+  return 1;
+}
+
 void randomQuote() {
   srand(time(0));
   int selectedQuote = rand() % quotes.size();
@@ -196,6 +215,15 @@ int main(int argc, char *argv[]) {
 
       cout << *next(quotesList.begin(), specifiedQuote) << "\n";
       return 0;
+    }
+
+    if (argc == 4 && string(argv[2]) == "-f") {
+      loadQuotes(argv[1]);
+
+      string specifiedQuote = argv[3];
+
+      int foundQuote = findQuote(specifiedQuote, argv[1]);
+      return foundQuote;
     }
 
     // quote management
