@@ -1,8 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <set>
-#include <string>
-#include <list>
 
 #include "ranqo.hpp"
 #include "commands.cpp"
