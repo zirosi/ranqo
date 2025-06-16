@@ -1,5 +1,5 @@
 # Ranqo
-Ranqo is a simple random quote generator built in c++.
+Ranqo is an overenginered random quote generator built in c++.
 
 ## Rqo files
 
