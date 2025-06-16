@@ -1,9 +1,8 @@
-all: 
-	main
-
-main:
-	clean
+prod:
+	rm -f build/ranqo
 	g++ -o build/ranqo src/main.cpp
 
-clean:
-	rm -f build/ranqo	
+debug:
+	rm -f build/ranqo
+	g++ -o build/ranqo src/main.cpp
+	ruby build/build-tools/test.rb
