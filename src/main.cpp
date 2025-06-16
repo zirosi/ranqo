@@ -27,6 +27,7 @@ void helpPromt() {
   cout << "-- Basic Arguments --\n";
   cout << "-h    ranqo -h : Shows the help promt\n";
   cout << "-l    ranqo <filepath> -l : Lists all the quotes\n";
+  cout << "-amt  ranqo <filepath> -amt : Lists the amount of quotes in a quotefile\n";
   cout << "-s    ranqo <filepath> -s <number> : Shows a specific quote\n";
   cout << "-f    ranqo <filepath> -f <quote> : Finds a quote in the quotefile\n\n";
   cout << "-- Quote Manipulation --\n";
@@ -108,6 +109,13 @@ void removeQuote(string deletingQuote, string filepath) {
   QUOTEFILE.close();
   temp.close();
   rename("temp.rqo", filepath.c_str());
+}
+
+void QuoteAmount(void) {
+
+  int QuoteAmount = quotes.size();
+
+  cout << "there are " << QuoteAmount << " quotes in the quotefile\n";
 }
 
 void addQuote(string addingQuote, string filepath) {
@@ -205,6 +213,12 @@ int main(int argc, char *argv[]) {
 
     if (argc == 3 && string(argv[2]) == "-l") {
       listQuotes();
+      return 0;
+    }
+
+    if (argc == 3 && string(argv[2]) == "-amt") {
+      loadQuotes(argv[1]);
+      QuoteAmount();
       return 0;
     }
 
