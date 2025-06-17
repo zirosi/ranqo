@@ -1,6 +1,6 @@
 prod:
 	rm -f build/ranqo
-	g++ -o build/ranqo-linux-v1.2 src/main.cpp
+	g++ -o build/ranqo-linux-v1.3 src/main.cpp
 
 debug:
 	rm -f build/ranqo
