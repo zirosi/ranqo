@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
       return 0;
     }
 
+    //basic commands
     loadQuotes(argv[1]);
     int noQuotes = noQuotesCheck();
 

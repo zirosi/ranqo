@@ -25,9 +25,9 @@ void helpPromt() {
   cout << "-- Basic Arguments --\n";
   cout << "-h    ranqo -h : Shows the help promt\n";
   cout << "-l    ranqo <filepath> -l : Lists all the quotes\n";
-  cout << "-amt  ranqo <filepath> -amt : Lists the amount of quotes in a quotefile\n";
   cout << "-s    ranqo <filepath> -s <number> : Shows a specific quote\n";
-  cout << "-f    ranqo <filepath> -f <quote> : Finds a quote in the quotefile\n\n";
+  cout << "-f    ranqo <filepath> -f <quote> : Finds a quote in the quotefile\n";
+  cout << "-amt  ranqo <filepath> -amt : Lists the amount of quotes in a quotefile\n\n";
   cout << "-- Quote Manipulation --\n";
   cout << "-a    ranqo <filepath> -a \"quote\" : Adds a quote to the quotefile\n";
   cout << "-r    ranqo <filepath> -r \"quote\" : Removes a quote from the quotefile\n";

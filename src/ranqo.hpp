@@ -9,6 +9,6 @@ using namespace std;
 
 list<string> quotesList;
 set<string> quotes;
-string version = "1.2 DEVELOPMENT";
+string version = "1.2 RELEASE";
 
 #endif
