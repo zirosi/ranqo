@@ -1,8 +1,6 @@
-realeaseVersion = v1.2
-
 prod:
 	rm -f build/ranqo
-	g++ -o build/ranqo-linux-${realeaseVersion} src/main.cpp
+	g++ -o build/ranqo-linux-v1.2 src/main.cpp
 
 debug:
 	rm -f build/ranqo
